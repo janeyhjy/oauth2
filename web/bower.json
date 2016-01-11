@@ -1,0 +1,25 @@
+{
+  "name": "Test",
+  "authors": [
+    "janey <janeyhe@augmentum.com.cn>"
+  ],
+  "description": "test",
+  "main": "vendor",
+  "moduleType": [
+    "globals"
+  ],
+  "license": "MIT",
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "vendor/bower",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "react": "~0.14.3",
+    "zepto": "~1.1.6"
+  }
+}
