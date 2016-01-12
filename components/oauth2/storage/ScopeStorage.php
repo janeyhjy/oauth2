@@ -13,7 +13,12 @@ class ScopeStorage extends AbstractStorage implements ScopeInterface
      */
     public function get($scope, $grantType = null, $clientId = null)
     {
-        return [['id'=>1, 'description'=>'description']];
+        $scope = new ScopeEntity($this->server);
+        $scope->hydrate([
+            'id' => 'basic',
+            'description' => 'Basic details about your account'
+        ]);
+        return $scope;
         // $result = Capsule::table('oauth_scopes')
         //                         ->where('id', $scope)
         //                         ->get();

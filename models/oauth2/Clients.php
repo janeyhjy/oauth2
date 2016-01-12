@@ -53,4 +53,6 @@ class Clients extends \yii\db\ActiveRecord
     {
         return $this->hasMany(OauthSessions::className(), ['client_id' => 'id']);
     }
+
+    // public static function getClientBy
 }

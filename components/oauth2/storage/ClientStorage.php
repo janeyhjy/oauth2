@@ -14,7 +14,12 @@ class ClientStorage extends AbstractStorage implements ClientInterface
      */
     public function get($clientId, $clientSecret = null, $redirectUri = null, $grantType = null)
     {
-        return [['id'=>1, 'name'=>'name']];
+        $client = new ClientEntity($this->server);
+        $client->hydrate([
+            'id' => 'testclient',
+            'name' => 'Test Client'
+        ]);
+        return $client;
         // $query = Capsule::table('oauth_clients')
         //                   ->select('oauth_clients.*')
         //                   ->where('oauth_clients.id', $clientId);
