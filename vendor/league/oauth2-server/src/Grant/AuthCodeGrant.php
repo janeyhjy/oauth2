@@ -206,18 +206,18 @@ class AuthCodeGrant extends AbstractGrant
     public function completeFlow()
     {
         // Get the required params
-        $clientId = $this->server->getRequest()->request->get('client_id', $this->server->getRequest()->getUser());
+        $clientId = $this->server->getRequest()->query->get('client_id', $this->server->getRequest()->getUser());
         if (is_null($clientId)) {
             throw new Exception\InvalidRequestException('client_id');
         }
 
-        $clientSecret = $this->server->getRequest()->request->get('client_secret',
+        $clientSecret = $this->server->getRequest()->query->get('client_secret',
             $this->server->getRequest()->getPassword());
         if ($this->shouldRequireClientSecret() && is_null($clientSecret)) {
             throw new Exception\InvalidRequestException('client_secret');
         }
 
-        $redirectUri = $this->server->getRequest()->request->get('redirect_uri', null);
+        $redirectUri = $this->server->getRequest()->query->get('redirect_uri', null);
         if (is_null($redirectUri)) {
             throw new Exception\InvalidRequestException('redirect_uri');
         }
@@ -236,11 +236,12 @@ class AuthCodeGrant extends AbstractGrant
         }
 
         // Validate the auth code
-        $authCode = $this->server->getRequest()->request->get('code', null);
+        $authCode = $this->server->getRequest()->query->get('code', null);
         if (is_null($authCode)) {
             throw new Exception\InvalidRequestException('code');
         }
 
+        // $code: AuthCodeEntity
         $code = $this->server->getAuthCodeStorage()->get($authCode);
         if (($code instanceof AuthCodeEntity) === false) {
             throw new Exception\InvalidRequestException('code');
@@ -256,9 +257,12 @@ class AuthCodeGrant extends AbstractGrant
             throw new Exception\InvalidRequestException('redirect_uri');
         }
 
+        // $session: SessionEntity
         $session = $code->getSession();
+
         $session->associateClient($client);
 
+        // $authCodeScopes: [ScopeEntity]
         $authCodeScopes = $code->getScopes();
 
         // Generate the access token
@@ -297,7 +301,6 @@ class AuthCodeGrant extends AbstractGrant
             $refreshToken->setAccessToken($accessToken);
             $refreshToken->save();
         }
-
         return $this->server->getTokenType()->generateResponse();
     }
 }

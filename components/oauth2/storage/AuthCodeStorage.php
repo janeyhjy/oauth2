@@ -14,7 +14,12 @@ class AuthCodeStorage extends AbstractStorage implements AuthCodeInterface
      */
     public function get($code)
     {
-        return 'token';
+        $token = new AuthCodeEntity($this->server);
+        $token->setId('I0kXkdIMjrz0kk6HWifR9SOVb4N5VfaNTimL9XVU');
+        $token->setRedirectUri('http://www.baidu.com');
+        $token->setExpireTime(time());
+
+        return $token;
     }
 
     public function create($token, $expireTime, $sessionId, $redirectUri)
@@ -27,7 +32,17 @@ class AuthCodeStorage extends AbstractStorage implements AuthCodeInterface
      */
     public function getScopes(AuthCodeEntity $token)
     {
-        return [['id'=>1, 'description'=>'description']];
+        $scope = [];
+        $result =  [['id'=>1, 'description'=>'description']];
+        foreach ($result as $item) {
+            $scope = (new ScopeEntity($this->server))
+                ->hydrate([
+                    'id' => $item['id'],
+                    'description' => $item['description']
+                ]);
+            $reponse[] = $scope;
+        }
+        return $scope;
     }
 
     /**

@@ -9,39 +9,36 @@ use League\OAuth2\Server\Entity\SessionEntity;
 use League\OAuth2\Server\Storage\AbstractStorage;
 use League\OAuth2\Server\Storage\SessionInterface;
 
+use app\models\auth2\Sessions;
+
 class SessionStorage extends AbstractStorage implements SessionInterface
 {
     public function getByAccessToken(AccessTokenEntity $accessToken)
     {
-        $result = Sessions::getOauthSessionByAccessToken($accessToken->getId());
-
-        if (!empty($result)) {
-            $session = new SessionEntity($this->server);//?
-            $session->setId($result->id);
-            $session->setOwner($result->owner_type, $result->owner_id);
-            return $session;
-        }
-
-        return;
+        $session = new SessionEntity($this->server);
+        $session->setId(1);
+        $session->setOwner('client', 'testclient');
+        return $session;
     }
 
     public function getByAuthCode(AuthCodeEntity $authCode)
     {
-        $result = Sessions::getOauthSessionByAuthCode($authCode->getId());
+        // $result = Sessions::getOauthSessionByAuthCode($authCode->getId());
 
-        if (!empty($result)) {
+        // if (!empty($result)) {
             $session = new SessionEntity($this->server);//?
-            $session->setId($result->id);
-            $session->setOwner($result->owner_type, $result->owner_id);
+            $session->setId(1);
+            $session->setOwner('client', 'testclient');
             return $session;
-        }
+        // }
 
-        return;
+        // return;
     }
 
     public function getScopes(SessionEntity $session)
     {
-        $result = Sessions::getScopesBySession($session->getId());
+        // $result = Sessions::getScopesBySession($session->getId());
+        $result = [['id'=>1, 'description'=>'description']];
 
         $scopes = [];
 

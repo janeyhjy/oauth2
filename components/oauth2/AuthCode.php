@@ -11,6 +11,7 @@ use app\components\oauth2\storage\AccessTokenStorage;
 use app\components\oauth2\storage\ClientStorage;
 use app\components\oauth2\storage\ScopeStorage;
 use app\components\oauth2\storage\AuthCodeStorage;
+use app\components\oauth2\storage\RefreshTokenStorage;
 
 
 class AuthCode extends \yii\base\Component
@@ -28,6 +29,7 @@ class AuthCode extends \yii\base\Component
         $this->server->setClientStorage(new ClientStorage);
         $this->server->setScopeStorage(new ScopeStorage);
         $this->server->setAuthCodeStorage(new AuthCodeStorage);
+        $this->server->setRefreshTokenStorage(new RefreshTokenStorage);
 
         $authCodeGrant = new AuthCodeGrant();
         $this->server->addGrantType($authCodeGrant);

@@ -261,7 +261,7 @@ class AuthorizationServer extends AbstractServer
      */
     public function issueAccessToken()
     {
-        $grantType = $this->getRequest()->request->get('grant_type');
+        $grantType = $this->getRequest()->query->get('grant_type');
         if (is_null($grantType)) {
             throw new Exception\InvalidRequestException('grant_type');
         }
